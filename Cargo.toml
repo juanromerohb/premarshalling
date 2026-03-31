@@ -1,0 +1,21 @@
+[package]
+name = "lct-rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.8"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+eframe = { version = "0.27", default-features = false, features = ["default_fonts", "glow", "x11"] }
+egui_extras = "0.27"
+rfd = "0.17.2"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+pprof = { version = "0.13", features = ["criterion", "flamegraph"] }
+
+[features]
+default = []
+cplex = []
+gurobi = []
