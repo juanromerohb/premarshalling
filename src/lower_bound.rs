@@ -108,13 +108,13 @@ fn lb2_value_with_bh(
 
         let mut pre_re = 0usize;
         let mut stack_has_positive_re = false;
-        let mut has_gt_above_to_bh = [false; MAX_HEIGHT];
+        let mut lowest_gt_above = [usize::MAX; MAX_HEIGHT];
         if bh_pn_s > 0 {
-            let mut seen_gt = false;
+            let mut lowest = usize::MAX;
             for t in (0..bh_pn_s).rev() {
-                has_gt_above_to_bh[t] = seen_gt;
+                lowest_gt_above[t] = lowest;
                 if bay.stacks[s][t] > pn1 {
-                    seen_gt = true;
+                    lowest = t;
                 }
             }
         }
@@ -124,8 +124,8 @@ fn lb2_value_with_bh(
             }
 
             let re = if t < bh_pn_s {
-                if has_gt_above_to_bh[t] {
-                    (bh_pn_s - (t + 1)).saturating_sub(pre_re)
+                if lowest_gt_above[t] != usize::MAX {
+                    (bh_pn_s - lowest_gt_above[t]).saturating_sub(pre_re)
                 } else {
                     0
                 }
@@ -211,9 +211,9 @@ fn compute_re_data(bay: &Bay, pn: Group) -> Vec<(usize, usize)> {
         for t in (0..he_s).rev() {
             if bay.stacks[s][t] == pn1 {
                 let re = if t < bh_pn_s {
-                    let has_gt_pn1 = ((t + 1)..bh_pn_s).any(|u| bay.stacks[s][u] > pn1);
-                    if has_gt_pn1 {
-                        (bh_pn_s - (t + 1)).saturating_sub(pre_re)
+                    let lowest_gt_pn1 = ((t + 1)..bh_pn_s).find(|&u| bay.stacks[s][u] > pn1);
+                    if let Some(b) = lowest_gt_pn1 {
+                        (bh_pn_s - b).saturating_sub(pre_re)
                     } else {
                         0
                     }

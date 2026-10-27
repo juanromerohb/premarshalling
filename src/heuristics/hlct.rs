@@ -78,6 +78,9 @@ pub fn hlct(bay: &Bay, crane: &CraneParams, tau: f64) -> Solution {
 
             let candidate_acc = bay_candidate.acc();
             let candidate_time = combined_time(&prefix_sol, &tail, crane);
+            if candidate_time > tau {
+                continue;
+            }
 
             if !is_better(candidate_acc, candidate_time, &best) {
                 continue;
