@@ -21,9 +21,11 @@ The codebase includes:
 - `src/`: Rust implementation of algorithms, models, utilities, and GUI
 - `src/bin/bench.rs`: batch benchmark runner
 - `src/bin/gui.rs`: desktop GUI entrypoint
+- `src/bin/bound_table.rs`: compares UB(tau) and LB(n) at the initial layout with the BBLCT solutions
 - `scripts/solve_lct_cpsat.py`: OR-Tools CP-SAT wrapper
 - `instances/`: benchmark instances used in the experiments
 - `paper-results/`: CSV summaries and category-level tables reported in the paper
+- `paper-results-rerun/bound-analysis/`: per-run values and LaTeX table written by `bound_table`
 
 ## Requirements
 
