@@ -4,7 +4,7 @@ Rust implementation of exact and heuristic methods for the **Container Premarsha
 
 This repository accompanies the paper:
 
-> Juan Romero del Hombrebueno, Consuelo Parreño-Torres.  
+> Juan Romero-del-Hombrebueno, Consuelo Parreño-Torres.  
 > *A branch-and-bound algorithm for the container premarshalling problem under limited crane time*.
 
 The codebase includes:
@@ -13,17 +13,18 @@ The codebase includes:
 - `GLCT` and `HLCT`: constructive and hybrid heuristics
 - `IPLCT`: integer programming model
 - `LCT1` and `LCT2`: constraint programming models with CP Optimizer and CP-SAT backends
-- A desktop GUI to inspect instances and solutions
 - Benchmark instances and paper result tables
 
 ## Repository Layout
 
-- `src/`: Rust implementation of algorithms, models, utilities, and GUI
+- `src/`: Rust implementation of algorithms, models, and utilities
 - `src/bin/bench.rs`: batch benchmark runner
-- `src/bin/gui.rs`: desktop GUI entrypoint
+- `src/bin/bound_table.rs`: compares UB(tau) and LB(n) at the initial layout with the BBLCT solutions
 - `scripts/solve_lct_cpsat.py`: OR-Tools CP-SAT wrapper
-- `instances/`: benchmark instances used in the experiments
+- `instances/`: benchmark instances used in the experiments; `instances/CVsub/` is the CV subset of the comparison between exact methods
 - `paper-results/`: CSV summaries and category-level tables reported in the paper
+- `paper-results/bound-analysis/`: per-run values and LaTeX table written by `bound_table`
+- `cluster/`: scripts used to run the experiments on a Slurm cluster and to build the result tables
 
 ## Requirements
 
@@ -37,7 +38,7 @@ Optional, depending on what you want to run:
 - IBM `cpoptimizer` on `PATH` for CP Optimizer runs
 - `gurobi_cl` on `PATH` for IPLCT runs
 
-The repository was developed for the experimental setup described in the paper, where the Rust code was run with Rust 1.93.1.
+The repository was developed for the experimental setup described in the paper, where the code was run with Rust 1.99.1, OR-Tools CP-SAT 9.15.6755 and Gurobi 13.0.3.
 
 ## Build
 
@@ -94,48 +95,6 @@ Useful options:
 
 Note: `--algo all` requires every external solver backend to be installed. If you only want the Rust-native methods, specify them explicitly.
 
-## Launch the GUI
-
-This repository also includes a precompiled Windows executable:
-
-- `gui.exe`: ready-to-use desktop GUI for Windows
-
-If you are on Windows and only want to explore instances or run algorithms interactively, you can launch `gui.exe` directly without building the Rust project first.
-
-### Windows Quick Start
-
-1. Run `gui.exe`.
-2. In `Input`, choose one of:
-   - `Manual`: create an instance by editing the grid
-   - `Single .txt file`: open one benchmark instance
-   - `Folder of .txt files`: run a batch over a directory
-3. In `Algorithm and Limits`, choose `BBLCT`, `HLCT`, or `GLCT`, and set `Tau (minutes)`.
-   - If you choose `BBLCT`, also set `BBLCT CPU limit (seconds)`.
-4. Click `Run`.
-
-### Brief GUI Guide
-
-- In `Manual` mode, fill the `Manual Grid Editor` with container group values.
-  - `Tier 1` is the bottom tier.
-  - `0` means an empty slot.
-- In `Single .txt file` mode, select an instance file from `instances/`.
-- In `Folder of .txt files` mode, the GUI processes all `.txt` instances in the chosen directory and shows a results table.
-- During a `BBLCT` run, the `Cancel BBLCT` button stops the search early.
-- In manual mode, the `Results` panel includes a step-by-step replay with `Prev`, `Next`, and the `Step` slider.
-- In file/folder modes, structured outputs are written under `results/`.
-
-### Build From Source
-
-```bash
-cargo run --release --bin gui
-```
-
-On Linux, the GUI is configured to use `x11` and software OpenGL by default. If startup fails, try:
-
-```bash
-WINIT_UNIX_BACKEND=x11 LIBGL_ALWAYS_SOFTWARE=1 cargo run --release --bin gui
-```
-
 ## Instance Format
 
 Instances are plain text matrices. Each column is a stack, `0` denotes an empty slot, and rows are listed from top to bottom.
@@ -162,13 +121,25 @@ The repository contains benchmark families used in the paper, including:
 
 ## Reproducibility
 
-The `paper-results/` directory contains summary tables and category-level CSV files generated for the computational study. The benchmark runner can be used to reproduce or extend those experiments.
+The `paper-results/` directory contains summary tables and category-level CSV files generated for the computational study. The benchmark runner can be used to reproduce or extend those experiments, and `cluster/README.md` describes how they were run.
+
+The results come from a complete re-run after the corrections listed in `CHANGELOG.md`. The results of the previous version remain available at the `v1.0.0` tag. The average reduction of inaccessible containers excludes instances whose initial layout is already fully accessible, since it is undefined for them. The category tables of the BB variants only cover CV and BF, the families on which those variants were run.
+
+To recompute the comparison between the bounds and the BBLCT solutions:
+
+```bash
+cargo run --release --bin bound_table -- \
+  --results paper-results/BBLCT/all_summary.csv \
+  --instances instances \
+  --out-csv results/bounds_by_run.csv \
+  --out-tex results/table_bounds.tex
+```
 
 Because CP and IP runs depend on external solver installations and licenses, reproducibility of the full comparison requires matching solver availability in addition to the Rust environment.
 
 ## Citation
 
-If you use this repository, please cite the associated paper. A finalized bibliographic entry will be added once publication details are available.
+If you use this repository, please cite the associated paper. A finalized bibliographic entry will be added once publication details are available. The code and results are archived in Zenodo at https://doi.org/10.5281/zenodo.19361481, which always resolves to the latest version.
 
 ## License
 

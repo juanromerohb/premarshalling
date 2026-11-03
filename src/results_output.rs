@@ -1,4 +1,4 @@
-//! Structured result writers for benchmark and GUI runs.
+//! Structured result writers for benchmark runs.
 
 use std::fmt::Write as FmtWrite;
 use std::fs;

@@ -1,0 +1,16 @@
+{
+  "title": "premarshalling: Rust implementation of exact and heuristic methods for the Container Premarshalling Problem under Limited Crane Time",
+  "description": "Rust implementation of exact and heuristic methods for the Container Premarshalling Problem under Limited Crane Time, with the benchmark instances and the computational results of the associated paper.",
+  "upload_type": "software",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Romero-del-Hombrebueno, Juan",
+      "affiliation": "University of Valencia"
+    },
+    {
+      "name": "Parreño-Torres, Consuelo",
+      "affiliation": "University of Valencia"
+    }
+  ]
+}

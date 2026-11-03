@@ -1,0 +1,21 @@
+# Full-time-limit validation tests: METHOD TAU REL_PATH
+# CP2 runs missing from the previous campaign
+CP2 15 instances/CVsub/CVh5s8/h5s8n24.txt
+CP2 20 instances/CVsub/CVh5s4/h5s4n11.txt
+CP2 20 instances/CVsub/CVh5s4/h5s4n16.txt
+CP2 20 instances/CVsub/CVh5s4/h5s4n22.txt
+CP2 20 instances/CVsub/CVh6s5/h6s5n31.txt
+# largest model instances
+CP1 20 instances/CVsub/CVh5s8/h5s8n1.txt
+CP1 20 instances/ZJY/ZJYh4s9/h4s9n1.txt
+IPLCT 20 instances/CVsub/CVh5s8/h5s8n1.txt
+IPLCT 20 instances/ZJY/ZJYh4s9/h4s9n1.txt
+CP2 20 instances/CVsub/CVh5s8/h5s8n1.txt
+# BBLCT runs that hit the 3600 s limit before
+BBLCT 20 instances/BF/BF10/h8s16n17.txt
+BBLCT 20 instances/BF/BF13/h8s16n11.txt
+BBLCT 20 instances/EMM/EMMh4s10/h4s10f50c0n11.txt
+BBLCT 20 instances/BZ/BZh4s9/h4s9f70p3n9.txt
+# BB0 (always hits the 600 s limit on BF)
+BB0 20 instances/BF/BF10/h8s16n17.txt
+BB0 10 instances/CV/CVh5s8/h5s8n1.txt
