@@ -16,7 +16,7 @@ This version corrects two implementation errors and replaces all the computation
 
 ### Added
 
-- `cluster/`: scripts used to run the experiments and to build the result tables.
+- `scripts/make_category_tables.py`: builds the category-level tables from the summary CSV files.
 - `src/bin/bound_table.rs` and `paper-results/bound-analysis/`: comparison of the bounds at the initial layout with the BBLCT solutions.
 - `.zenodo.json`: archive metadata.
 

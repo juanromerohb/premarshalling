@@ -21,10 +21,10 @@ The codebase includes:
 - `src/bin/bench.rs`: batch benchmark runner
 - `src/bin/bound_table.rs`: compares UB(tau) and LB(n) at the initial layout with the BBLCT solutions
 - `scripts/solve_lct_cpsat.py`: OR-Tools CP-SAT wrapper
+- `scripts/make_category_tables.py`: builds the category-level tables from the summary CSV files
 - `instances/`: benchmark instances used in the experiments; `instances/CVsub/` is the CV subset of the comparison between exact methods
 - `paper-results/`: CSV summaries and category-level tables reported in the paper
 - `paper-results/bound-analysis/`: per-run values and LaTeX table written by `bound_table`
-- `cluster/`: scripts used to run the experiments on a Slurm cluster and to build the result tables
 
 ## Requirements
 
@@ -121,7 +121,7 @@ The repository contains benchmark families used in the paper, including:
 
 ## Reproducibility
 
-The `paper-results/` directory contains summary tables and category-level CSV files generated for the computational study. The benchmark runner can be used to reproduce or extend those experiments, and `cluster/README.md` describes how they were run.
+The `paper-results/` directory contains summary tables and category-level CSV files generated for the computational study. The benchmark runner can be used to reproduce or extend those experiments, using the settings described in the paper.
 
 The results come from a complete re-run after the corrections listed in `CHANGELOG.md`. The results of the previous version remain available at the `v1.0.0` tag. The average reduction of inaccessible containers excludes instances whose initial layout is already fully accessible, since it is undefined for them. The category tables of the BB variants only cover CV and BF, the families on which those variants were run.
 
